@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Eligibility & Advisory System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-university"></i>
+                    <span>LoanIQ</span>
+                </div>
+                <nav class="nav">
+                    <a href="#home" class="nav-link active">Home</a>
+                    <a href="#eligibility" class="nav-link">Check Eligibility</a>
+                    <a href="#chatbot" class="nav-link">Chat Support</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">AI-Powered Loan Eligibility Assessment</h1>
+                <p class="hero-subtitle">Get instant, accurate loan eligibility predictions with transparent AI explanations</p>
+                <button class="btn btn-primary btn-large" onclick="scrollToForm()">
+                    <i class="fas fa-check-circle"></i> Check Your Eligibility
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Loan Application Form -->
+            <section id="eligibility" class="form-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-file-alt"></i> Loan Application Form</h2>
+                        <p>Please fill in all the required information to check your loan eligibility</p>
+                    </div>
+                    <div class="card-body">
+                        <form id="loanForm" class="loan-form">
+                            <div class="form-grid">
+                                <!-- Personal Information -->
+                                <div class="form-group">
+                                    <label for="person_age">Age <span class="required">*</span></label>
+                                    <input type="number" id="person_age" name="person_age" required min="18" max="100">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="person_education">Education Level <span class="required">*</span></label>
+                                    <select id="person_education" name="person_education" required>
+                                        <option value="">Select Education</option>
+                                        <option value="HighSchool">High School</option>
+                                        <option value="Associate">Associate Degree</option>
+                                        <option value="Bachelor">Bachelor's Degree</option>
+                                        <option value="Master">Master's Degree</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="person_income">Annual Income ($) <span class="required">*</span></label>
+                                    <input type="number" id="person_income" name="person_income" required min="0" step="0.01">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="person_emp_exp">Employment Experience (years) <span class="required">*</span></label>
+                                    <input type="number" id="person_emp_exp" name="person_emp_exp" required min="0" max="50">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="person_home_ownership">Home Ownership <span class="required">*</span></label>
+                                    <select id="person_home_ownership" name="person_home_ownership" required>
+                                        <option value="">Select Ownership</option>
+                                        <option value="RENT">Rent</option>
+                                        <option value="OWN">Own</option>
+                                        <option value="MORTGAGE">Mortgage</option>
+                                        <option value="OTHER">Other</option>
+                                    </select>
+                                </div>
+
+                                <!-- Loan Information -->
+                                <div class="form-group">
+                                    <label for="loan_amnt">Loan Amount ($) <span class="required">*</span></label>
+                                    <input type="number" id="loan_amnt" name="loan_amnt" required min="0" step="0.01">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="loan_intent">Loan Purpose <span class="required">*</span></label>
+                                    <select id="loan_intent" name="loan_intent" required>
+                                        <option value="">Select Purpose</option>
+                                        <option value="PERSONAL">Personal</option>
+                                        <option value="EDUCATION">Education</option>
+                                        <option value="MEDICAL">Medical</option>
+                                        <option value="VENTURE">Venture</option>
+                                        <option value="HOMEIMPROVEMENT">Home Improvement</option>
+                                        <option value="DEBTCONSOLIDATION">Debt Consolidation</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="loan_percent_income">Loan % of Income (auto-calculated if 0)</label>
+                                    <input type="number" id="loan_percent_income" name="loan_percent_income" min="0" max="1" step="0.01" value="0">
+                                </div>
+
+                                <!-- Credit Information -->
+                                <div class="form-group">
+                                    <label for="cb_person_cred_hist_length">Credit History Length (years) <span class="required">*</span></label>
+                                    <input type="number" id="cb_person_cred_hist_length" name="cb_person_cred_hist_length" required min="0" max="50" step="0.1">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="credit_score">Credit Score <span class="required">*</span></label>
+                                    <input type="number" id="credit_score" name="credit_score" required min="300" max="850">
+                                    <small class="form-help">Range: 300-850</small>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="previous_loan_defaults_on_file">Previous Loan Defaults <span class="required">*</span></label>
+                                    <select id="previous_loan_defaults_on_file" name="previous_loan_defaults_on_file" required>
+                                        <option value="">Select</option>
+                                        <option value="No">No</option>
+                                        <option value="Yes">Yes</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary btn-large">
+                                    <i class="fas fa-search"></i> Check Eligibility
+                                </button>
+                                <button type="reset" class="btn btn-secondary">
+                                    <i class="fas fa-redo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section id="results" class="results-section" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-chart-line"></i> Eligibility Results</h2>
+                    </div>
+                    <div class="card-body">
+                        <div id="predictionResult" class="prediction-result"></div>
+                        <div id="shapExplanation" class="shap-explanation"></div>
+                        <div class="action-buttons">
+                            <button id="downloadPdfBtn" class="btn btn-success">
+                                <i class="fas fa-download"></i> Download PDF Report
+                            </button>
+                            <button id="newApplicationBtn" class="btn btn-secondary">
+                                <i class="fas fa-plus"></i> New Application
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Chatbot Section -->
+            <section id="chatbot" class="chatbot-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h2><i class="fas fa-comments"></i> Chat Support</h2>
+                        <p>Ask questions about loan eligibility and requirements</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="chatbot-container">
+                            <div id="chatMessages" class="chat-messages">
+                                <div class="chat-message bot-message">
+                                    <div class="message-content">
+                                        <i class="fas fa-robot"></i>
+                                        <p>Hello! I'm here to help you with loan-related questions. How can I assist you today?</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-input-container">
+                                <input type="text" id="chatInput" class="chat-input" placeholder="Type your message here...">
+                                <button id="sendChatBtn" class="btn btn-primary">
+                                    <i class="fas fa-paper-plane"></i> Send
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 LoanIQ. All rights reserved. | AI-Powered Loan Eligibility System</p>
+        </div>
+    </footer>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Processing your request...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
+
+
